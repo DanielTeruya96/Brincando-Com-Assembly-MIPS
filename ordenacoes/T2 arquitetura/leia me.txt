@@ -1,0 +1,59 @@
+READ-ME
+Trabalho de Arquitetura de computadores
+Autor: Daniel Massanori Teruya Leite
+
+Conteudo do trabalho:
+ 	
+	Dentro do .zip deve conter 
+		-Este READ-ME
+		-ordenacoes.asm
+		-insertion.asm
+		-selection.asm
+		-bubble.asm
+	Os três arquivos inserton,selection e bubble estão com os algoritimos de ordenação no arquivo insertion por exemplo esta apenas o algoritmo de insertionSort
+	que foi implementado no arquivo de ordenacao, a mesma coisa para os outros dois arquivos.
+	No arquivo ordenacoes.asm esta os requisitos do trabalho.
+
+Como utilizar o programa:
+
+	Abra o arquivo ordenacoes.asm no simulador mars e execute.
+	O programa é auto explicativo.
+	ler o tamanho do vetor -> le os elementos do vetor -> escolhe o metodo de ordenação -> mostra os resultados
+	Não é possivel criar um vetor com tamanho negativo e de tamanho maximo de 20, os elementos dos vetores tem que ser inteiro positivo de ate 4 bites, caso insira algum desses valores
+	o programa pode gerar erro
+
+Descrição do software:
+	
+	O software realiza as operações de ordenações de insertion,selection e bubbleSort, o programa le e ordena o vetor apenas uma vez 
+	para ordenar de novo precisa de inicializar o programa novamente.
+	
+	O código é dividido em algumas partes, a main,insertion,selection,bubble,exibiir e troca.
+	main- 	Onde apresenta a mesnagem de inicio, lê o tamnho do vetor e os elementos dentro do vetor, depois disso na main pede para o usuario escolher o metodo de ordenação
+		apos escolha a main chama o procedimento de cada metodo de ordenacao.
+	
+	metodos de ordenacao-
+		Todos metodos de ordenação tem em comum o tamanho do vetor que é carregado no registradr $t7, toda vez que for realizar uma troca é chamado o procedimento
+		"troca", no final é chamado o metodo "exibiir" e retorna para o procedimento "fimEscolha"
+	
+	troca-
+		Procedimento chamdo pelo procedimento de ordenação, que troca os elementos dos vetores, passando como parametro o valor e a posição do vetor a ser trocado nos registradores
+		de $a0 até $a3. O procedimento tambem tem um contador de troca que registra no label "qdt".
+	exibiir-
+		Procedimento que recebe como parametro o $a0 como zero e o $a3 como o tamnho do vetor e exibi o vetor da seguinte maneira "[0] [1] [2]"
+		na implementação do programa é utilizado esse metodo para exibir da posição zero até a ultima posiçãodo vetor, porem essa implementação 
+		pode ser reutilizada para exibir o vetor da posição $a0, até a posição $a3.
+	fimEscolha-
+		Final do programa, carrega o valor que esta no label "qdt" e mostra na tela a mensagem "A quantidade de troca foi %d", onde %d é a quantidade de troca
+		que foi contada no procedimento "troca".
+
+	vetor, lenght, qdt e stacp-
+		São label com .word para guardar na memoria os valores necessario para o programa como o vetor, lenght que é o tamanho do vetor, qtd que é
+		a quantidade de troca e o stacp que é para guardar o valor do geristrador $ra, para chamar o procedimento.
+
+Observações-
+	-Este trabalho não foi implementado o mergeSort, pela dificuldade encontrada pelo aluno de manipular vetores.
+	-Em alguns trechos de código foi salvo o valor de $ra na memoria sem nescessidade, por causa de que o aluno estava primeiro montando o algoritmo de ordenação
+	como ainda não estava definido se o metodo seria retornado com o comando "ja $ra" foi relevante deixar pronto a parte que salva o valor do resgistrador $ra, por
+	isso o código ficou reutilizável precisando de mudar apenas a ultima linha de código com o "j fimescolha".
+	-A implementação usa bastante reutilização de código, como o procedimento "troca","exibiir" e os metodos de ordenação.
+	-O programa não utilizou de loops para poder ordenar várias vezes o vetor.
